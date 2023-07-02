@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS model
     price              NUMERIC(10, 2) NOT NULL,
     size               NUMERIC(10, 2) NOT NULL,
     is_available       BOOLEAN NOT NULL,
-    type               VARCHAR(100) NOT NULL,
     appliance_id       INT REFERENCES appliance (id) NOT NULL,
     pc_category        VARCHAR(100),
     pc_processor_type  VARCHAR(100),
