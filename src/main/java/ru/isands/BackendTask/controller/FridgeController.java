@@ -20,7 +20,7 @@ public class FridgeController {
         this.fridgeService = fridgeService;
     }
 
-    @Operation(summary = "Получить реестр холодильников.")
+    @Operation(summary = "Получить реестр холодильников (в наличии).")
     @GetMapping
     public List<FridgeDto> getFridges() {
         return fridgeService.getFridges();

@@ -21,7 +21,7 @@ public class VacuumController {
         this.vacuumService = vacuumService;
     }
 
-    @Operation(summary = "Получить все модели холодильников.")
+    @Operation(summary = "Получить все модели холодильников (в наличии).")
     @GetMapping
     public List<VacuumDto> getVacuums() {
         return vacuumService.getVacuums();

@@ -33,9 +33,6 @@ public class Model {
     @Column(name = "is_available")
     private Boolean available;
 
-    @Column(name = "type")
-    private String type;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @ToString.Exclude
     private Appliance appliance;

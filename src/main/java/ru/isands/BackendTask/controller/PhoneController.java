@@ -22,7 +22,7 @@ public class PhoneController {
         this.phoneService = phoneService;
     }
 
-    @Operation(summary = "Получить все модели телефонов.")
+    @Operation(summary = "Получить все модели телефонов (в наличии).")
     @GetMapping
     public List<PhoneDto> getPhones(){
         return phoneService.getPhones();

@@ -22,7 +22,7 @@ public class TelevisionController {
         this.televisionService = televisionService;
     }
 
-    @Operation(summary = "Получить все модели телевизоров.")
+    @Operation(summary = "Получить все модели телевизоров (в наличии).")
     @GetMapping
     public List<TelevisionDto> getTelevisions() {
         return televisionService.getTelevision();

@@ -21,7 +21,7 @@ public class ComputerController {
         this.computerService = computerService;
     }
 
-    @Operation(summary = "Получить список всех компьютеров.")
+    @Operation(summary = "Получить список всех компьютеров (в наличии).")
     @GetMapping
     public List<ComputerDto> getComputers() {
         return computerService.getComputers();
