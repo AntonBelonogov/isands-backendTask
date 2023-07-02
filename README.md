@@ -31,6 +31,13 @@
 ## Запуск приложения.
 
 1. Настроить подключение к БД в application.properties и создать БД
+```
+По умолчанию БД назывется: isands
+URL: localhost:5432/isands
+Username: postgres
+Password: iamroot
+Данные для заполнения таблицы находятся в папке data.sql
+```
 2. Через инструмент сборки Maven зайти в концоль дойти до папки с проектом и ввести комманду
 ```cmd
 mvn spring-boot:run
