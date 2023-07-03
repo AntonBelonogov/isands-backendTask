@@ -12,7 +12,7 @@ import ru.isands.BackendTask.mapper.PhoneMapper;
 import ru.isands.BackendTask.model.Appliance;
 import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
-import ru.isands.BackendTask.repository.PhoneRepository;
+import ru.isands.BackendTask.repository.ModelRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,16 +23,16 @@ public class PhoneService {
 
     private static final String APPLIANCE_NAME = "Смартфон";
     private static final String ENTITY_NOT_FOUND = "Phone not found.";
-    private final PhoneRepository phoneRepository;
+    private final ModelRepository phoneRepository;
     private final ApplianceRepository applianceRepository;
 
-    private final ApplianceService modelService;
+    private final SearchFilterService searchFilterService;
 
     @Autowired
-    public PhoneService(PhoneRepository phoneRepository, ApplianceRepository applianceRepository, ApplianceService modelService) {
+    public PhoneService(ModelRepository phoneRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
         this.phoneRepository = phoneRepository;
         this.applianceRepository = applianceRepository;
-        this.modelService = modelService;
+        this.searchFilterService = searchFilterService;
     }
 
     public List<PhoneDto> getPhones() {
@@ -80,7 +80,7 @@ public class PhoneService {
             Integer memory,
             Integer numberOfCameras
     ) {
-        List<Model> models = modelService.getWithSearch(name, APPLIANCE_NAME, color, minPrice, maxPrice);
+        List<Model> models = searchFilterService.getWithSearch(name, APPLIANCE_NAME, color, minPrice, maxPrice);
 
         if (memory != null) {
             models.retainAll(phoneRepository
@@ -97,33 +97,9 @@ public class PhoneService {
     }
 
     public List<PhoneDto> getWithFilter(String alphabet, String price) {
-        Sort sort = getSort(alphabet, price);
+        Sort sort = searchFilterService.getSort(alphabet, price);
         return phoneRepository.findAllByAppliance_Name(APPLIANCE_NAME, sort).stream()
                 .map(PhoneMapper::toDto)
                 .collect(Collectors.toList());
-    }
-
-    private Sort getSort(String alphabet, String price) {
-        if (alphabet != null && price == null) {
-            return Sort.by(checkType(alphabet) == SortType.ASC ?
-                    Sort.Direction.ASC : Sort.Direction.DESC, "name");
-        }
-        if (price != null && alphabet == null) {
-            return Sort.by(checkType(price) == SortType.ASC ?
-                    Sort.Direction.ASC : Sort.Direction.DESC, "price");
-        }
-        if (alphabet != null && price != null) {
-            return Sort.by(checkType(alphabet) == SortType.ASC ? Sort.Order.asc("name") : Sort.Order.desc("name"),
-                    checkType(price) == SortType.ASC ? Sort.Order.asc("price") : Sort.Order.desc("price"));
-        }
-        return Sort.by(Sort.Direction.ASC, "name");
-    }
-
-    private SortType checkType(String type) {
-        try {
-            return SortType.valueOf(type.toUpperCase());
-        } catch (IllegalArgumentException exception) {
-            throw new UnknownSortTypeException(String.format("unknown state: %s", type));
-        }
     }
 }

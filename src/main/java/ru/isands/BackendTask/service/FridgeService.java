@@ -4,15 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.isands.BackendTask.dto.FridgeDto;
-import ru.isands.BackendTask.enums.SortType;
 import ru.isands.BackendTask.exception.ConflictException;
 import ru.isands.BackendTask.exception.NotFoundException;
-import ru.isands.BackendTask.exception.UnknownSortTypeException;
 import ru.isands.BackendTask.mapper.FridgeMapper;
 import ru.isands.BackendTask.model.Appliance;
 import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
-import ru.isands.BackendTask.repository.FridgeRepository;
+import ru.isands.BackendTask.repository.ModelRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,15 +21,15 @@ public class FridgeService {
 
     private static final String APPLIANCE_NAME = "Холодильник";
     private static final String ENTITY_NOT_FOUND = "Fridge not found.";
-    private final FridgeRepository fridgeRepository;
+    private final ModelRepository fridgeRepository;
     private final ApplianceRepository applianceRepository;
-    private final ApplianceService modelService;
+    private final SearchFilterService searchFilterService;
 
     @Autowired
-    public FridgeService(FridgeRepository fridgeRepository, ApplianceRepository applianceRepository, ApplianceService applianceService) {
+    public FridgeService(ModelRepository fridgeRepository, ApplianceRepository applianceRepository, SearchFilterService applianceService) {
         this.fridgeRepository = fridgeRepository;
         this.applianceRepository = applianceRepository;
-        this.modelService = applianceService;
+        this.searchFilterService = applianceService;
     }
 
     public List<FridgeDto> getFridges() {
@@ -79,7 +77,7 @@ public class FridgeService {
             Integer numberOfDoors,
             String compressorType
     ) {
-        List<Model> models = modelService.getWithSearch(name, APPLIANCE_NAME, color, minPrice, maxPrice);
+        List<Model> models = searchFilterService.getWithSearch(name, APPLIANCE_NAME, color, minPrice, maxPrice);
 
         if (numberOfDoors != null) {
             models.retainAll(fridgeRepository
@@ -95,33 +93,9 @@ public class FridgeService {
     }
 
     public List<FridgeDto> getWithFilter(String alphabet, String price) {
-        Sort sort = getSort(alphabet, price);
+        Sort sort = searchFilterService.getSort(alphabet, price);
         return fridgeRepository.findAllByAppliance_Name(APPLIANCE_NAME, sort).stream()
                 .map(FridgeMapper::toDto)
                 .collect(Collectors.toList());
-    }
-
-    private Sort getSort(String alphabet, String price) {
-        if (alphabet != null && price == null) {
-            return Sort.by(checkType(alphabet) == SortType.ASC ?
-                    Sort.Direction.ASC : Sort.Direction.DESC, "name");
-        }
-        if (price != null && alphabet == null) {
-            return Sort.by(checkType(price) == SortType.ASC ?
-                    Sort.Direction.ASC : Sort.Direction.DESC, "price");
-        }
-        if (alphabet != null && price != null) {
-            return Sort.by(checkType(alphabet) == SortType.ASC ? Sort.Order.asc("name") : Sort.Order.desc("name"),
-                    checkType(price) == SortType.ASC ? Sort.Order.asc("price") : Sort.Order.desc("price"));
-        }
-        return Sort.by(Sort.Direction.ASC, "name");
-    }
-
-    private SortType checkType(String type) {
-        try {
-            return SortType.valueOf(type.toUpperCase());
-        } catch (IllegalArgumentException exception) {
-            throw new UnknownSortTypeException(String.format("unknown state: %s", type));
-        }
     }
 }

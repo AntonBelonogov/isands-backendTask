@@ -4,18 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.isands.BackendTask.dto.VacuumDto;
-import ru.isands.BackendTask.enums.SortType;
 import ru.isands.BackendTask.exception.ConflictException;
 import ru.isands.BackendTask.exception.NotFoundException;
-import ru.isands.BackendTask.exception.UnknownSortTypeException;
 import ru.isands.BackendTask.mapper.VacuumMapper;
 import ru.isands.BackendTask.model.Appliance;
 import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
-import ru.isands.BackendTask.repository.VacuumRepository;
+import ru.isands.BackendTask.repository.ModelRepository;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,15 +22,15 @@ public class VacuumService {
     private static final String APPLIANCE_NAME = "Пылесос";
     private static final String ENTITY_NOT_FOUND = "Vacuum not found.";
 
-    private final VacuumRepository vacuumRepository;
+    private final ModelRepository vacuumRepository;
     private final ApplianceRepository applianceRepository;
-    private final ApplianceService modelService;
+    private final SearchFilterService searchFilterService;
 
     @Autowired
-    public VacuumService(VacuumRepository vacuumRepository, ApplianceRepository applianceRepository, ApplianceService modelService) {
+    public VacuumService(ModelRepository vacuumRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
         this.vacuumRepository = vacuumRepository;
         this.applianceRepository = applianceRepository;
-        this.modelService = modelService;
+        this.searchFilterService = searchFilterService;
     }
 
     public List<VacuumDto> getVacuums() {
@@ -81,7 +78,7 @@ public class VacuumService {
             Float dustBagVolume,
             Integer numberOfModes
     ) {
-        List<Model> models = modelService.getWithSearch(name, APPLIANCE_NAME, color, minPrice, maxPrice);
+        List<Model> models = searchFilterService.getWithSearch(name, APPLIANCE_NAME, color, minPrice, maxPrice);
 
         if (dustBagVolume != null) {
             models.retainAll(vacuumRepository.
@@ -98,33 +95,9 @@ public class VacuumService {
     }
 
     public List<VacuumDto> getWithFilter(String alphabet, String price) {
-        List<Model> models = new ArrayList<>();
-        Sort sort;
-        if (alphabet != null && price == null) {
-            sort = Sort.by(checkType(alphabet) == SortType.ASC ?
-                    Sort.Direction.ASC : Sort.Direction.DESC, "name");
-            models = vacuumRepository.findAllByAppliance_Name(APPLIANCE_NAME, sort);
-        }
-        if (price != null && alphabet == null) {
-            sort = Sort.by(checkType(price) == SortType.ASC ?
-                    Sort.Direction.ASC : Sort.Direction.DESC, "price");
-            models = vacuumRepository.findAllByAppliance_Name(APPLIANCE_NAME, sort);
-        }
-        if (alphabet != null && price != null) {
-            sort = Sort.by(checkType(alphabet) == SortType.ASC ? Sort.Order.asc("name") : Sort.Order.desc("name"),
-                    checkType(price) == SortType.ASC ? Sort.Order.asc("price") : Sort.Order.desc("price"));
-            models = vacuumRepository.findAllByAppliance_Name(APPLIANCE_NAME, sort);
-        }
-        return models.stream()
+        Sort sort = searchFilterService.getSort(alphabet, price);
+        return vacuumRepository.findAllByAppliance_Name(APPLIANCE_NAME, sort).stream()
                 .map(VacuumMapper::toDto)
                 .collect(Collectors.toList());
-    }
-
-    private SortType checkType(String type) {
-        try {
-            return SortType.valueOf(type.toUpperCase());
-        } catch (IllegalArgumentException exception) {
-            throw new UnknownSortTypeException(String.format("unknown state: %s", type));
-        }
     }
 }
