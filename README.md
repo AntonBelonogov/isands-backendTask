@@ -47,7 +47,3 @@ Password: iamroot
 mvn spring-boot:run
 ```
 3. Перейти по адресу: <a herf="http://localhost:8080/swagger-ui.html"> http://localhost:8080/swagger-ui.html </a>
-
-```
-Также в ветке develop будет переделываться код (меньше копипаста из класса в класс)
-```
