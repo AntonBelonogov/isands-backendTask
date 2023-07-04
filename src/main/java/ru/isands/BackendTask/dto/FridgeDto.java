@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Data
 @NoArgsConstructor
@@ -17,11 +19,9 @@ import javax.validation.constraints.NotBlank;
 public class FridgeDto extends ModelDto {
 
     @Schema(description = "Колличество дверей.")
-    @NotBlank
     private Integer numberOfDoors;
 
     @Schema(description = "Тип компрессора.")
-    @NotBlank
     private String compressorType;
 
     @Schema(description = "Вид техники к которой он относиться.")

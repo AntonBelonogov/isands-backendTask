@@ -12,6 +12,7 @@ import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
 import ru.isands.BackendTask.repository.ModelRepository;
 import ru.isands.BackendTask.service.searchAndFilter.SearchFilterService;
+import ru.isands.BackendTask.validator.FridgeValidator;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -50,6 +51,7 @@ public class FridgeServiceImpl implements FridgeService {
         if (!appliance.getName().equals(APPLIANCE_NAME)) {
             throw new ConflictException("Appliance is not for fridge.");
         }
+        FridgeValidator.isFridgeValid(fridgeDto);
         Model model = FridgeMapper.toModel(fridgeDto);
         model.setAppliance(appliance);
         return FridgeMapper.toDto(model);

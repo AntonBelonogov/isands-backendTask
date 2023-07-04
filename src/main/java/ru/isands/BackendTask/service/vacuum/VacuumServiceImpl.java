@@ -12,6 +12,7 @@ import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
 import ru.isands.BackendTask.repository.ModelRepository;
 import ru.isands.BackendTask.service.searchAndFilter.SearchFilterServiceImpl;
+import ru.isands.BackendTask.validator.VacuumValidator;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -51,6 +52,7 @@ public class VacuumServiceImpl implements VacuumService {
         if (!appliance.getName().equals(APPLIANCE_NAME)) {
             throw new ConflictException("Appliance is not for vacuum.");
         }
+        VacuumValidator.isTelevisionValid(vacuumDto);
         Model model = VacuumMapper.toModel(vacuumDto);
         model.setAppliance(appliance);
         return VacuumMapper.toDto(modelRepository.save(model));

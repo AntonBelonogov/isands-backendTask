@@ -8,7 +8,6 @@ public class FridgeMapper {
 
     public static FridgeDto toDto(Model model) {
         return FridgeDto.builder()
-                .id(model.getId())
                 .name(model.getName())
                 .serialNumber(model.getSerialNumber())
                 .color(model.getColor())

@@ -35,7 +35,7 @@ public class PhoneController {
 
     @Operation(summary = "Добавить модель телефона по ID реестра.")
     @PostMapping("/{applianceId}")
-    public PhoneDto addPhone(@PathVariable Long applianceId, @RequestBody @Valid PhoneDto phoneDto) {
+    public PhoneDto addPhone(@PathVariable Long applianceId, @Valid @RequestBody PhoneDto phoneDto) {
         return phoneService.addPhone(applianceId, phoneDto);
     }
 

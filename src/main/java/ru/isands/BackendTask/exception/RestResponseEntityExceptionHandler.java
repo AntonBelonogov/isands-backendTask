@@ -24,9 +24,16 @@ public class RestResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> handleConflictException(ConflictException ex) {
         return new ResponseEntity<>(new ErrorResponse("Error 409 conflict: " + ex.getMessage()),
+                HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorResponse> handleConflictException(EntityNotValidException ex) {
+        return new ResponseEntity<>(new ErrorResponse("Error 400 entity not valid: " + ex.getMessage()),
                 HttpStatus.BAD_REQUEST);
     }
 }

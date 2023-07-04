@@ -6,7 +6,6 @@ import ru.isands.BackendTask.model.Model;
 public class VacuumMapper {
     public static VacuumDto toDto(Model model) {
         return VacuumDto.builder()
-                .id(model.getId())
                 .name(model.getName())
                 .serialNumber(model.getSerialNumber())
                 .color(model.getColor())

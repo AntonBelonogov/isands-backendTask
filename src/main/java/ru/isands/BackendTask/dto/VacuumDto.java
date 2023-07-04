@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -17,14 +18,11 @@ import javax.validation.constraints.NotBlank;
 public class VacuumDto extends ModelDto {
 
     @Schema(description = "Вместимость мешка пылесоса.")
-    @NotBlank
     private Float dustBagVolume;
 
     @Schema(description = "Колличество режимов пылесоса.")
-    @NotBlank
     private Integer numberOfModes;
 
     @Schema(description = "Вид техники к которой он относиться.")
-    @NotBlank
     private ApplianceModelDto appliance;
 }

@@ -12,6 +12,7 @@ import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
 import ru.isands.BackendTask.repository.ModelRepository;
 import ru.isands.BackendTask.service.searchAndFilter.SearchFilterServiceImpl;
+import ru.isands.BackendTask.validator.TelevisionValidator;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -50,6 +51,7 @@ public class TelevisionServiceImpl implements TelevisionService {
         if (!appliance.getName().equals(APPLIANCE_NAME)) {
             throw new ConflictException("Appliance is not for television.");
         }
+        TelevisionValidator.isTelevisionValid(televisionDto);
         Model model = TelevisionMapper.toModel(televisionDto);
         model.setAppliance(appliance);
         return TelevisionMapper.toDto(modelRepository.save(model));

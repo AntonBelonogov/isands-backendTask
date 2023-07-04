@@ -12,6 +12,7 @@ import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
 import ru.isands.BackendTask.repository.ModelRepository;
 import ru.isands.BackendTask.service.searchAndFilter.SearchFilterService;
+import ru.isands.BackendTask.validator.ComputerValidator;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -50,6 +51,7 @@ public class ComputerServiceImpl implements ComputerService {
         if (!appliance.getName().equals(APPLIANCE_NAME)) {
             throw new ConflictException("Appliance is not for computer.");
         }
+        ComputerValidator.isComputerValid(computerDto);
         Model model = ComputerMapper.toModel(computerDto);
         model.setAppliance(appliance);
         return ComputerMapper.toDto(computerRepository.save(model));

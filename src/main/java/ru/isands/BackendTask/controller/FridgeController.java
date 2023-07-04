@@ -34,7 +34,7 @@ public class FridgeController {
 
     @Operation(summary = "Добавить в реестр по ID холодильник.")
     @PostMapping("/{applianceId}")
-    public FridgeDto addFridge(@PathVariable Long applianceId, @RequestBody @Valid FridgeDto fridgeDto) {
+    public FridgeDto addFridge(@PathVariable Long applianceId,@Valid @RequestBody FridgeDto fridgeDto) {
         return fridgeService.addFridge(applianceId, fridgeDto);
     }
 

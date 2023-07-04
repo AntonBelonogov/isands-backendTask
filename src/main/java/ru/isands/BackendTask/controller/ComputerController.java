@@ -35,7 +35,7 @@ public class ComputerController {
 
     @Operation(summary = "Добавить компьютер в Appliance.")
     @PostMapping("/{appliancesId}")
-    public ComputerDto addComputer(@PathVariable Long appliancesId, @RequestBody @Valid ComputerDto computerDto) {
+    public ComputerDto addComputer(@PathVariable Long appliancesId, @Valid @RequestBody ComputerDto computerDto) {
         return computerService.addComputer(appliancesId, computerDto);
     }
 

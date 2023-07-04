@@ -7,7 +7,6 @@ import ru.isands.BackendTask.model.Model;
 public class PhoneMapper {
     public static PhoneDto toDto(Model model) {
         return PhoneDto.builder()
-                .id(model.getId())
                 .name(model.getName())
                 .serialNumber(model.getSerialNumber())
                 .color(model.getColor())

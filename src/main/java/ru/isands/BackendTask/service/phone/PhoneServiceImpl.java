@@ -12,6 +12,7 @@ import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
 import ru.isands.BackendTask.repository.ModelRepository;
 import ru.isands.BackendTask.service.searchAndFilter.SearchFilterService;
+import ru.isands.BackendTask.validator.PhoneValidator;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -51,6 +52,7 @@ public class PhoneServiceImpl implements PhoneService {
         if (!appliance.getName().equals(APPLIANCE_NAME)) {
             throw new ConflictException("Appliance is not for phone.");
         }
+        PhoneValidator.isPhoneValid(phoneDto);
         Model model = PhoneMapper.toModel(phoneDto);
         model.setAppliance(appliance);
         return PhoneMapper.toDto(phoneRepository.save(model));

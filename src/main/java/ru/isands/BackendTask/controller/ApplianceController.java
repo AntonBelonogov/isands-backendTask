@@ -38,7 +38,7 @@ public class ApplianceController {
 
     @Operation(summary = "Добавить вид техники.")
     @PostMapping
-    public AppliancesDto addAppliance(@RequestBody @Valid AppliancesDto appliancesDto) {
+    public AppliancesDto addAppliance(@RequestBody AppliancesDto appliancesDto) {
         return applianceService.addAppliance(appliancesDto);
     }
 

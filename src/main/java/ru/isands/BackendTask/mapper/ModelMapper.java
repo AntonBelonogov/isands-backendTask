@@ -8,7 +8,6 @@ public class ModelMapper {
 
     public static ModelInfoDto toInfoDto(Model model) {
         return ModelInfoDto.builder()
-                .id(model.getId())
                 .name(model.getName())
                 .serialNumber(model.getSerialNumber())
                 .color(model.getColor())
@@ -20,7 +19,6 @@ public class ModelMapper {
 
     public static Model toModel(ModelDto modelDto) {
         Model model = new Model();
-        model.setId(modelDto.getId());
         model.setName(modelDto.getName());
         model.setSerialNumber(modelDto.getSerialNumber());
         model.setColor(modelDto.getColor());
@@ -32,7 +30,6 @@ public class ModelMapper {
 
     public static Model toModelFromModelInfo(ModelInfoDto modelInfoDto) {
         Model model = new Model();
-        model.setId(modelInfoDto.getId());
         model.setName(modelInfoDto.getName());
         model.setSerialNumber(modelInfoDto.getSerialNumber());
         model.setColor(modelInfoDto.getColor());
@@ -43,8 +40,6 @@ public class ModelMapper {
     }
 
     public static Model updateModel(Model model, ModelDto modelDto) {
-        model.setId(modelDto.getId() == null ?
-                model.getId() : modelDto.getId());
         model.setName(modelDto.getName() == null ?
                 model.getName() : modelDto.getName());
         model.setSerialNumber(modelDto.getSerialNumber() == null ?

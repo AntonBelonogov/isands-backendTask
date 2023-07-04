@@ -6,7 +6,6 @@ import ru.isands.BackendTask.model.Model;
 public class TelevisionMapper {
     public static TelevisionDto toDto(Model model) {
         return TelevisionDto.builder()
-                .id(model.getId())
                 .name(model.getName())
                 .serialNumber(model.getSerialNumber())
                 .color(model.getColor())

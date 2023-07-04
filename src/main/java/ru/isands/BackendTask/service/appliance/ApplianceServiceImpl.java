@@ -13,6 +13,7 @@ import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
 import ru.isands.BackendTask.repository.ModelRepository;
 import ru.isands.BackendTask.service.searchAndFilter.SearchFilterService;
+import ru.isands.BackendTask.validator.ApplianceValidator;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -46,6 +47,7 @@ public class ApplianceServiceImpl implements ApplianceService {
     }
 
     public AppliancesDto addAppliance(AppliancesDto appliancesDto) {
+        ApplianceValidator.isApplianceValid(appliancesDto);
         Appliance appliance = ApplianceMapper.toAppliance(appliancesDto);
         return ApplianceMapper.toDto(applianceRepository.save(appliance));
     }

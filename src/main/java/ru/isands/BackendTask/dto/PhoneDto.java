@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -17,14 +18,11 @@ import javax.validation.constraints.NotBlank;
 public class PhoneDto extends ModelDto {
 
     @Schema(description = "Количество памяти телефона.")
-    @NotBlank
     private Integer memory;
 
     @Schema(description = "Колличество камер телефона.")
-    @NotBlank
     private Integer numberOfCameras;
 
     @Schema(description = "Вид техники к которой он относиться.")
-    @NotBlank
     private ApplianceModelDto appliance;
 }

@@ -6,7 +6,6 @@ import ru.isands.BackendTask.model.Model;
 public class ComputerMapper {
     public static ComputerDto toDto(Model model) {
         return ComputerDto.builder()
-                .id(model.getId())
                 .name(model.getName())
                 .serialNumber(model.getSerialNumber())
                 .color(model.getColor())

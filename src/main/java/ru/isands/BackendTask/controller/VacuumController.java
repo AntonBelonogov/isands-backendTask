@@ -36,7 +36,7 @@ public class VacuumController {
 
     @Operation(summary = "Добавить модель холодильника в реестр по ID.")
     @PostMapping("/{applianceId}")
-    public VacuumDto addVacuum(@PathVariable Long applianceId, @RequestBody @Valid VacuumDto vacuumDto) {
+    public VacuumDto addVacuum(@PathVariable Long applianceId, @Valid @RequestBody VacuumDto vacuumDto) {
         return vacuumService.addVacuum(applianceId, vacuumDto);
     }
 

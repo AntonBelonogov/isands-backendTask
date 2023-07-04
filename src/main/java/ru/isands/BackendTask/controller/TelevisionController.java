@@ -35,7 +35,7 @@ public class TelevisionController {
 
     @Operation(summary = "Добавить модель телевизора по реестра ID.")
     @PostMapping("/{applianceId}")
-    public TelevisionDto addTelevision(@PathVariable Long applianceId, @RequestBody @Valid TelevisionDto televisionDto) {
+    public TelevisionDto addTelevision(@PathVariable Long applianceId, @Valid @RequestBody TelevisionDto televisionDto) {
         return televisionService.addTelevision(applianceId, televisionDto);
     }
 
