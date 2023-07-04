@@ -16,8 +16,6 @@ import java.math.BigDecimal;
 @SuperBuilder(toBuilder = true)
 public abstract class ModelDto {
 
-    private Long id;
-
     @Schema(description = "Наиминование модели.")
     @NotBlank
     private String name;
