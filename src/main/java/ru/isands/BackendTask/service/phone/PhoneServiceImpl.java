@@ -1,25 +1,24 @@
-package ru.isands.BackendTask.service;
+package ru.isands.BackendTask.service.phone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.isands.BackendTask.dto.PhoneDto;
-import ru.isands.BackendTask.enums.SortType;
 import ru.isands.BackendTask.exception.ConflictException;
 import ru.isands.BackendTask.exception.NotFoundException;
-import ru.isands.BackendTask.exception.UnknownSortTypeException;
 import ru.isands.BackendTask.mapper.PhoneMapper;
 import ru.isands.BackendTask.model.Appliance;
 import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
 import ru.isands.BackendTask.repository.ModelRepository;
+import ru.isands.BackendTask.service.searchAndFilter.SearchFilterService;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PhoneService {
+public class PhoneServiceImpl implements PhoneService {
 
     private static final String APPLIANCE_NAME = "Смартфон";
     private static final String ENTITY_NOT_FOUND = "Phone not found.";
@@ -29,7 +28,7 @@ public class PhoneService {
     private final SearchFilterService searchFilterService;
 
     @Autowired
-    public PhoneService(ModelRepository phoneRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
+    public PhoneServiceImpl(ModelRepository phoneRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
         this.phoneRepository = phoneRepository;
         this.applianceRepository = applianceRepository;
         this.searchFilterService = searchFilterService;

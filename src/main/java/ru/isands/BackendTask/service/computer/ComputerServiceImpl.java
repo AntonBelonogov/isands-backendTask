@@ -1,4 +1,4 @@
-package ru.isands.BackendTask.service;
+package ru.isands.BackendTask.service.computer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -11,13 +11,14 @@ import ru.isands.BackendTask.model.Appliance;
 import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
 import ru.isands.BackendTask.repository.ModelRepository;
+import ru.isands.BackendTask.service.searchAndFilter.SearchFilterService;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ComputerService {
+public class ComputerServiceImpl implements ComputerService {
 
     private static final String APPLIANCE_NAME = "Компьютер";
     private static final String ENTITY_NOT_FOUND = "Computer not found.";
@@ -26,7 +27,7 @@ public class ComputerService {
     private final SearchFilterService searchFilterService;
 
     @Autowired
-    public ComputerService(ModelRepository computerRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
+    public ComputerServiceImpl(ModelRepository computerRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
         this.computerRepository = computerRepository;
         this.applianceRepository = applianceRepository;
         this.searchFilterService = searchFilterService;

@@ -3,9 +3,8 @@ package ru.isands.BackendTask.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.isands.BackendTask.dto.PhoneDto;
 import ru.isands.BackendTask.dto.TelevisionDto;
-import ru.isands.BackendTask.service.TelevisionService;
+import ru.isands.BackendTask.service.television.TelevisionService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;

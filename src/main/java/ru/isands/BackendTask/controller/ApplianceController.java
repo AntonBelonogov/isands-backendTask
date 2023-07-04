@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.isands.BackendTask.dto.AppliancesDto;
 import ru.isands.BackendTask.dto.ModelInfoDto;
 import ru.isands.BackendTask.mapper.ModelMapper;
-import ru.isands.BackendTask.service.ApplianceService;
+import ru.isands.BackendTask.service.appliance.ApplianceService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;

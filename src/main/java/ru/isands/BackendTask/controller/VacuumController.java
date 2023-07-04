@@ -4,7 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.isands.BackendTask.dto.VacuumDto;
-import ru.isands.BackendTask.service.VacuumService;
+import ru.isands.BackendTask.service.vacuum.VacuumService;
+import ru.isands.BackendTask.service.vacuum.VacuumServiceImpl;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;

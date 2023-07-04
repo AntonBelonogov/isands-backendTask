@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.isands.BackendTask.dto.FridgeDto;
-import ru.isands.BackendTask.service.FridgeService;
+import ru.isands.BackendTask.service.fridge.FridgeService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;

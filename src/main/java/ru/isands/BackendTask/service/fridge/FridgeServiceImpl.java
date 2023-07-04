@@ -1,4 +1,4 @@
-package ru.isands.BackendTask.service;
+package ru.isands.BackendTask.service.fridge;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -11,13 +11,14 @@ import ru.isands.BackendTask.model.Appliance;
 import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
 import ru.isands.BackendTask.repository.ModelRepository;
+import ru.isands.BackendTask.service.searchAndFilter.SearchFilterService;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class FridgeService {
+public class FridgeServiceImpl implements FridgeService {
 
     private static final String APPLIANCE_NAME = "Холодильник";
     private static final String ENTITY_NOT_FOUND = "Fridge not found.";
@@ -26,7 +27,7 @@ public class FridgeService {
     private final SearchFilterService searchFilterService;
 
     @Autowired
-    public FridgeService(ModelRepository fridgeRepository, ApplianceRepository applianceRepository, SearchFilterService applianceService) {
+    public FridgeServiceImpl(ModelRepository fridgeRepository, ApplianceRepository applianceRepository, SearchFilterService applianceService) {
         this.fridgeRepository = fridgeRepository;
         this.applianceRepository = applianceRepository;
         this.searchFilterService = applianceService;

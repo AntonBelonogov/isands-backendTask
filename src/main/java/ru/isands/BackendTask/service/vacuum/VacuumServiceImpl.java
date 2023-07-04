@@ -1,4 +1,4 @@
-package ru.isands.BackendTask.service;
+package ru.isands.BackendTask.service.vacuum;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -11,23 +11,24 @@ import ru.isands.BackendTask.model.Appliance;
 import ru.isands.BackendTask.model.Model;
 import ru.isands.BackendTask.repository.ApplianceRepository;
 import ru.isands.BackendTask.repository.ModelRepository;
+import ru.isands.BackendTask.service.searchAndFilter.SearchFilterServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class VacuumService {
+public class VacuumServiceImpl implements VacuumService {
 
     private static final String APPLIANCE_NAME = "Пылесос";
     private static final String ENTITY_NOT_FOUND = "Vacuum not found.";
 
     private final ModelRepository modelRepository;
     private final ApplianceRepository applianceRepository;
-    private final SearchFilterService searchFilterService;
+    private final SearchFilterServiceImpl searchFilterService;
 
     @Autowired
-    public VacuumService(ModelRepository modelRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
+    public VacuumServiceImpl(ModelRepository modelRepository, ApplianceRepository applianceRepository, SearchFilterServiceImpl searchFilterService) {
         this.modelRepository = modelRepository;
         this.applianceRepository = applianceRepository;
         this.searchFilterService = searchFilterService;

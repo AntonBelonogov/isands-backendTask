@@ -3,9 +3,8 @@ package ru.isands.BackendTask.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.isands.BackendTask.dto.ComputerDto;
 import ru.isands.BackendTask.dto.PhoneDto;
-import ru.isands.BackendTask.service.PhoneService;
+import ru.isands.BackendTask.service.phone.PhoneService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -24,7 +23,7 @@ public class PhoneController {
 
     @Operation(summary = "Получить все модели телефонов (в наличии).")
     @GetMapping
-    public List<PhoneDto> getPhones(){
+    public List<PhoneDto> getPhones() {
         return phoneService.getPhones();
     }
 
@@ -48,7 +47,7 @@ public class PhoneController {
 
     @Operation(summary = "Удалить модель телефона по ID.")
     @DeleteMapping("/{phoneId}")
-    public Boolean deletePhone(@PathVariable Long phoneId){
+    public Boolean deletePhone(@PathVariable Long phoneId) {
         return phoneService.deletePhone(phoneId);
     }
 

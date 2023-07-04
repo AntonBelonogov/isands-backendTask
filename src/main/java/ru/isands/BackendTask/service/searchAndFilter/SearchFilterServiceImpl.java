@@ -1,4 +1,4 @@
-package ru.isands.BackendTask.service;
+package ru.isands.BackendTask.service.searchAndFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -12,11 +12,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class SearchFilterService {
+public class SearchFilterServiceImpl implements SearchFilterService {
     private final ModelRepository modelRepository;
 
     @Autowired
-    public SearchFilterService(ModelRepository modelRepository) {
+    public SearchFilterServiceImpl(ModelRepository modelRepository) {
         this.modelRepository = modelRepository;
     }
 

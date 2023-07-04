@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.isands.BackendTask.dto.ComputerDto;
-import ru.isands.BackendTask.service.ComputerService;
+import ru.isands.BackendTask.service.computer.ComputerService;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
