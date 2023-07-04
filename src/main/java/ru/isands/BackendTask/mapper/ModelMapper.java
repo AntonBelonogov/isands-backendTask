@@ -6,10 +6,6 @@ import ru.isands.BackendTask.model.Model;
 
 public class ModelMapper {
 
-    public static ModelDto toDto(Model model) {
-        return null; //TODO Разабраться с этим
-    }
-
     public static ModelInfoDto toInfoDto(Model model) {
         return ModelInfoDto.builder()
                 .id(model.getId())

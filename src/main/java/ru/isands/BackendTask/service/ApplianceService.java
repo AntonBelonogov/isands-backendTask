@@ -5,9 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.isands.BackendTask.dto.AppliancesDto;
 import ru.isands.BackendTask.dto.ModelInfoDto;
-import ru.isands.BackendTask.enums.SortType;
 import ru.isands.BackendTask.exception.NotFoundException;
-import ru.isands.BackendTask.exception.UnknownSortTypeException;
 import ru.isands.BackendTask.mapper.ApplianceMapper;
 import ru.isands.BackendTask.mapper.ModelMapper;
 import ru.isands.BackendTask.model.Appliance;
@@ -25,11 +23,13 @@ public class ApplianceService {
     private static final String ENTITY_NOT_FOUND = "Appliance not found.";
     private final ApplianceRepository applianceRepository;
     private final ModelRepository modelRepository;
+    private final SearchFilterService searchFilterService;
 
     @Autowired
-    public ApplianceService(ApplianceRepository applianceRepository, ModelRepository modelRepository) {
+    public ApplianceService(ApplianceRepository applianceRepository, ModelRepository modelRepository, SearchFilterService searchFilterService) {
         this.applianceRepository = applianceRepository;
         this.modelRepository = modelRepository;
+        this.searchFilterService = searchFilterService;
     }
 
     public List<AppliancesDto> getAppliances() {
@@ -71,59 +71,13 @@ public class ApplianceService {
             BigDecimal minPrice,
             BigDecimal maxPrice
     ) {
-        List<Model> models;
-
-        if (applianceName != null) {
-            models = modelRepository.findAllByAppliance_Name(applianceName);
-        } else {
-            models = modelRepository.findAll();
-        }
-        if (name != null) {
-            models.retainAll(modelRepository.findAllByNameIgnoreCase(name));
-        }
-        if (color != null) {
-            models.retainAll(modelRepository.findAllByColorIgnoreCase(color));
-        }
-        if (minPrice != null || maxPrice != null) {
-            if (minPrice == null) {
-                minPrice = BigDecimal.valueOf(0);
-            }
-            if (maxPrice == null) {
-                maxPrice = BigDecimal.valueOf(99999999);
-            }
-            models.retainAll(modelRepository.findAllByPriceBetween(minPrice, maxPrice));
-        }
-        return models;
+        return searchFilterService.getWithSearch(name, applianceName, color, minPrice, maxPrice);
     }
 
     public List<ModelInfoDto> getWithFilter(String alphabet, String price) {
-        Sort sort = getSort(alphabet, price);
+        Sort sort = searchFilterService.getSort(alphabet, price);
         return modelRepository.findAll(sort).stream()
                 .map(ModelMapper::toInfoDto)
                 .collect(Collectors.toList());
-    }
-
-    private Sort getSort(String alphabet, String price) {
-        if (alphabet != null && price == null) {
-            return Sort.by(checkType(alphabet) == SortType.ASC ?
-                    Sort.Direction.ASC : Sort.Direction.DESC, "name");
-        }
-        if (price != null && alphabet == null) {
-            return Sort.by(checkType(price) == SortType.ASC ?
-                    Sort.Direction.ASC : Sort.Direction.DESC, "price");
-        }
-        if (alphabet != null && price != null) {
-            return Sort.by(checkType(alphabet) == SortType.ASC ? Sort.Order.asc("name") : Sort.Order.desc("name"),
-                    checkType(price) == SortType.ASC ? Sort.Order.asc("price") : Sort.Order.desc("price"));
-        }
-        return Sort.by(Sort.Direction.ASC, "name");
-    }
-
-    private SortType checkType(String type) {
-        try {
-            return SortType.valueOf(type.toUpperCase());
-        } catch (IllegalArgumentException exception) {
-            throw new UnknownSortTypeException(String.format("unknown state: %s", type));
-        }
     }
 }
