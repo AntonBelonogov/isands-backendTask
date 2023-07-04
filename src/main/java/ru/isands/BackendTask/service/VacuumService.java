@@ -22,25 +22,25 @@ public class VacuumService {
     private static final String APPLIANCE_NAME = "Пылесос";
     private static final String ENTITY_NOT_FOUND = "Vacuum not found.";
 
-    private final ModelRepository vacuumRepository;
+    private final ModelRepository modelRepository;
     private final ApplianceRepository applianceRepository;
     private final SearchFilterService searchFilterService;
 
     @Autowired
-    public VacuumService(ModelRepository vacuumRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
-        this.vacuumRepository = vacuumRepository;
+    public VacuumService(ModelRepository modelRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
+        this.modelRepository = modelRepository;
         this.applianceRepository = applianceRepository;
         this.searchFilterService = searchFilterService;
     }
 
     public List<VacuumDto> getVacuums() {
-        return vacuumRepository.findAllByAppliance_NameAndAvailable(APPLIANCE_NAME, true).stream()
+        return modelRepository.findAllByAppliance_NameAndAvailable(APPLIANCE_NAME, true).stream()
                 .map(VacuumMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public VacuumDto getVacuumById(Long vacuumId) {
-        return VacuumMapper.toDto(vacuumRepository.findByAppliance_NameAndId(APPLIANCE_NAME, vacuumId)
+        return VacuumMapper.toDto(modelRepository.findByAppliance_NameAndId(APPLIANCE_NAME, vacuumId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND)));
     }
 
@@ -52,22 +52,22 @@ public class VacuumService {
         }
         Model model = VacuumMapper.toModel(vacuumDto);
         model.setAppliance(appliance);
-        return VacuumMapper.toDto(vacuumRepository.save(model));
+        return VacuumMapper.toDto(modelRepository.save(model));
     }
 
     public VacuumDto updateVacuum(Long vacuumId, VacuumDto vacuumDto) {
-        Model model = vacuumRepository.findByAppliance_NameAndId(APPLIANCE_NAME, vacuumId)
+        Model model = modelRepository.findByAppliance_NameAndId(APPLIANCE_NAME, vacuumId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
-        model = vacuumRepository.save(VacuumMapper.updateModel(model, vacuumDto));
+        model = modelRepository.save(VacuumMapper.updateModel(model, vacuumDto));
         return VacuumMapper.toDto(model);
     }
 
     public Boolean deleteVacuum(Long vacuumId) {
-        if (!vacuumRepository.existsByAppliance_NameAndId(APPLIANCE_NAME, vacuumId)) {
+        if (!modelRepository.existsByAppliance_NameAndId(APPLIANCE_NAME, vacuumId)) {
             throw new NotFoundException(ENTITY_NOT_FOUND);
         }
-        vacuumRepository.deleteById(vacuumId);
-        return !vacuumRepository.existsByAppliance_NameAndId(APPLIANCE_NAME, vacuumId);
+        modelRepository.deleteById(vacuumId);
+        return !modelRepository.existsByAppliance_NameAndId(APPLIANCE_NAME, vacuumId);
     }
 
     public List<VacuumDto> getWithSearch(
@@ -81,11 +81,11 @@ public class VacuumService {
         List<Model> models = searchFilterService.getWithSearch(name, APPLIANCE_NAME, color, minPrice, maxPrice);
 
         if (dustBagVolume != null) {
-            models.retainAll(vacuumRepository.
+            models.retainAll(modelRepository.
                     findAllByAppliance_NameAndDustBagVolume(APPLIANCE_NAME, dustBagVolume));
         }
         if (numberOfModes != null) {
-            models.retainAll(vacuumRepository
+            models.retainAll(modelRepository
                     .findAllByAppliance_NameAndNumberOfModes(APPLIANCE_NAME, numberOfModes));
         }
 
@@ -96,7 +96,7 @@ public class VacuumService {
 
     public List<VacuumDto> getWithFilter(String alphabet, String price) {
         Sort sort = searchFilterService.getSort(alphabet, price);
-        return vacuumRepository.findAllByAppliance_Name(APPLIANCE_NAME, sort).stream()
+        return modelRepository.findAllByAppliance_Name(APPLIANCE_NAME, sort).stream()
                 .map(VacuumMapper::toDto)
                 .collect(Collectors.toList());
     }

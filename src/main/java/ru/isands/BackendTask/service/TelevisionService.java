@@ -21,25 +21,25 @@ public class TelevisionService {
 
     private static final String APPLIANCE_NAME = "Телевизор";
     private static final String ENTITY_NOT_FOUND = "Television not found.";
-    private final ModelRepository televisionRepository;
+    private final ModelRepository modelRepository;
     private final ApplianceRepository applianceRepository;
     private final SearchFilterService searchFilterService;
 
     @Autowired
-    public TelevisionService(ModelRepository televisionRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
-        this.televisionRepository = televisionRepository;
+    public TelevisionService(ModelRepository modelRepository, ApplianceRepository applianceRepository, SearchFilterService searchFilterService) {
+        this.modelRepository = modelRepository;
         this.applianceRepository = applianceRepository;
         this.searchFilterService = searchFilterService;
     }
 
     public List<TelevisionDto> getTelevision() {
-        return televisionRepository.findAllByAppliance_NameAndAvailable(APPLIANCE_NAME, true).stream()
+        return modelRepository.findAllByAppliance_NameAndAvailable(APPLIANCE_NAME, true).stream()
                 .map(TelevisionMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public TelevisionDto getTelevisionById(Long televisionId) {
-        return TelevisionMapper.toDto(televisionRepository.findByAppliance_NameAndId(APPLIANCE_NAME, televisionId)
+        return TelevisionMapper.toDto(modelRepository.findByAppliance_NameAndId(APPLIANCE_NAME, televisionId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND)));
     }
 
@@ -51,22 +51,22 @@ public class TelevisionService {
         }
         Model model = TelevisionMapper.toModel(televisionDto);
         model.setAppliance(appliance);
-        return TelevisionMapper.toDto(televisionRepository.save(model));
+        return TelevisionMapper.toDto(modelRepository.save(model));
     }
 
     public TelevisionDto updateTelevision(Long televisionId, TelevisionDto televisionDto) {
-        Model model = televisionRepository.findByAppliance_NameAndId(APPLIANCE_NAME, televisionId)
+        Model model = modelRepository.findByAppliance_NameAndId(APPLIANCE_NAME, televisionId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
-        model = televisionRepository.save(TelevisionMapper.updateModel(model, televisionDto));
+        model = modelRepository.save(TelevisionMapper.updateModel(model, televisionDto));
         return TelevisionMapper.toDto(model);
     }
 
     public Boolean deletePhone(Long televisionId) {
-        if (!televisionRepository.existsByAppliance_NameAndId(APPLIANCE_NAME, televisionId)) {
+        if (!modelRepository.existsByAppliance_NameAndId(APPLIANCE_NAME, televisionId)) {
             throw new NotFoundException(ENTITY_NOT_FOUND);
         }
-        televisionRepository.deleteById(televisionId);
-        return !televisionRepository.existsByAppliance_NameAndId(APPLIANCE_NAME, televisionId);
+        modelRepository.deleteById(televisionId);
+        return !modelRepository.existsByAppliance_NameAndId(APPLIANCE_NAME, televisionId);
     }
 
     public List<TelevisionDto> getWithSearch(
@@ -80,11 +80,11 @@ public class TelevisionService {
         List<Model> models = searchFilterService.getWithSearch(name, APPLIANCE_NAME, color, minPrice, maxPrice);
 
         if (televisionCategory != null) {
-            models.retainAll(televisionRepository
+            models.retainAll(modelRepository
                     .findAllByAppliance_NameAndTelevisionCategoryIgnoreCase(APPLIANCE_NAME, televisionCategory));
         }
         if (televisionTechnology != null) {
-            models.retainAll(televisionRepository
+            models.retainAll(modelRepository
                     .findAllByAppliance_NameAndTelevisionTechnologyIgnoreCase(APPLIANCE_NAME, televisionTechnology));
         }
 
@@ -96,7 +96,7 @@ public class TelevisionService {
     public List<TelevisionDto> getWithFilter(String alphabet, String price) {
         Sort sort = searchFilterService.getSort(alphabet, price);
 
-        return televisionRepository.findAllByAppliance_Name(APPLIANCE_NAME, sort).stream()
+        return modelRepository.findAllByAppliance_Name(APPLIANCE_NAME, sort).stream()
                 .map(TelevisionMapper::toDto)
                 .collect(Collectors.toList());
     }
