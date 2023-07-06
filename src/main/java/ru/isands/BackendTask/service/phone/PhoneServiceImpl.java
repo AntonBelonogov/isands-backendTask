@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.isands.BackendTask.dto.PhoneDto;
+import ru.isands.BackendTask.dto.inputDto.PhoneInputDto;
 import ru.isands.BackendTask.exception.ConflictException;
 import ru.isands.BackendTask.exception.NotFoundException;
 import ru.isands.BackendTask.mapper.PhoneMapper;
@@ -46,22 +47,22 @@ public class PhoneServiceImpl implements PhoneService {
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND)));
     }
 
-    public PhoneDto addPhone(Long applianceId, PhoneDto phoneDto) {
+    public PhoneDto addPhone(Long applianceId, PhoneInputDto phoneInputDto) {
         Appliance appliance = applianceRepository.findById(applianceId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
         if (!appliance.getName().equals(APPLIANCE_NAME)) {
             throw new ConflictException("Appliance is not for phone.");
         }
-        PhoneValidator.isPhoneValid(phoneDto);
-        Model model = PhoneMapper.toModel(phoneDto);
+        PhoneValidator.isPhoneValid(phoneInputDto);
+        Model model = PhoneMapper.toModel(phoneInputDto);
         model.setAppliance(appliance);
         return PhoneMapper.toDto(phoneRepository.save(model));
     }
 
-    public PhoneDto updatePhone(Long phoneId, PhoneDto phoneDto) {
+    public PhoneDto updatePhone(Long phoneId, PhoneInputDto phoneInputDto) {
         Model model = phoneRepository.findByAppliance_NameAndId(APPLIANCE_NAME, phoneId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
-        model = phoneRepository.save(PhoneMapper.updateModel(model, phoneDto));
+        model = phoneRepository.save(PhoneMapper.updateModel(model, phoneInputDto));
         return PhoneMapper.toDto(model);
     }
 

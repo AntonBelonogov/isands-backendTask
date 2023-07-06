@@ -4,10 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.isands.BackendTask.dto.VacuumDto;
+import ru.isands.BackendTask.dto.inputDto.VacuumInputDto;
 import ru.isands.BackendTask.service.vacuum.VacuumService;
-import ru.isands.BackendTask.service.vacuum.VacuumServiceImpl;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -36,14 +35,14 @@ public class VacuumController {
 
     @Operation(summary = "Добавить модель холодильника в реестр по ID.")
     @PostMapping("/{applianceId}")
-    public VacuumDto addVacuum(@PathVariable Long applianceId, @Valid @RequestBody VacuumDto vacuumDto) {
-        return vacuumService.addVacuum(applianceId, vacuumDto);
+    public VacuumDto addVacuum(@PathVariable Long applianceId, @RequestBody VacuumInputDto vacuumInputDto) {
+        return vacuumService.addVacuum(applianceId, vacuumInputDto);
     }
 
     @Operation(summary = "Обновить модель холодильника по ID.")
     @PatchMapping("/{vacuumId}")
-    public VacuumDto updateVacuum(@PathVariable Long vacuumId, @RequestBody VacuumDto vacuumDto) {
-        return vacuumService.updateVacuum(vacuumId, vacuumDto);
+    public VacuumDto updateVacuum(@PathVariable Long vacuumId, @RequestBody VacuumInputDto vacuumInputDto) {
+        return vacuumService.updateVacuum(vacuumId, vacuumInputDto);
     }
 
     @Operation(summary = "Удалить модель холодильника по ID.")

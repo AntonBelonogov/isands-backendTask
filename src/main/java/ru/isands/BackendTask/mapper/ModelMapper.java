@@ -1,7 +1,7 @@
 package ru.isands.BackendTask.mapper;
 
-import ru.isands.BackendTask.dto.ModelDto;
 import ru.isands.BackendTask.dto.ModelInfoDto;
+import ru.isands.BackendTask.dto.inputDto.ModelInputDto;
 import ru.isands.BackendTask.model.Model;
 
 public class ModelMapper {
@@ -17,7 +17,7 @@ public class ModelMapper {
                 .build();
     }
 
-    public static Model toModel(ModelDto modelDto) {
+    public static Model toModel(ModelInputDto modelDto) {
         Model model = new Model();
         model.setName(modelDto.getName());
         model.setSerialNumber(modelDto.getSerialNumber());
@@ -28,18 +28,7 @@ public class ModelMapper {
         return model;
     }
 
-    public static Model toModelFromModelInfo(ModelInfoDto modelInfoDto) {
-        Model model = new Model();
-        model.setName(modelInfoDto.getName());
-        model.setSerialNumber(modelInfoDto.getSerialNumber());
-        model.setColor(modelInfoDto.getColor());
-        model.setSize(modelInfoDto.getSize());
-        model.setPrice(modelInfoDto.getPrice());
-        model.setAvailable(modelInfoDto.getIsAvailable());
-        return model;
-    }
-
-    public static Model updateModel(Model model, ModelDto modelDto) {
+    public static Model updateModel(Model model, ModelInputDto modelDto) {
         model.setName(modelDto.getName() == null ?
                 model.getName() : modelDto.getName());
         model.setSerialNumber(modelDto.getSerialNumber() == null ?

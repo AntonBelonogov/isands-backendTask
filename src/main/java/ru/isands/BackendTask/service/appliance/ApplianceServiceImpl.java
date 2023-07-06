@@ -3,8 +3,9 @@ package ru.isands.BackendTask.service.appliance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import ru.isands.BackendTask.dto.AppliancesDto;
+import ru.isands.BackendTask.dto.ApplianceDto;
 import ru.isands.BackendTask.dto.ModelInfoDto;
+import ru.isands.BackendTask.dto.inputDto.ApplianceInputDto;
 import ru.isands.BackendTask.exception.NotFoundException;
 import ru.isands.BackendTask.mapper.ApplianceMapper;
 import ru.isands.BackendTask.mapper.ModelMapper;
@@ -34,28 +35,28 @@ public class ApplianceServiceImpl implements ApplianceService {
         this.searchFilterService = searchFilterService;
     }
 
-    public List<AppliancesDto> getAppliances() {
+    public List<ApplianceDto> getAppliances() {
         return applianceRepository.findAll()
                 .stream()
                 .map(ApplianceMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public AppliancesDto getApplianceById(Long applianceId) {
+    public ApplianceDto getApplianceById(Long applianceId) {
         return ApplianceMapper.toDto(applianceRepository.findById(applianceId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND)));
     }
 
-    public AppliancesDto addAppliance(AppliancesDto appliancesDto) {
-        ApplianceValidator.isApplianceValid(appliancesDto);
-        Appliance appliance = ApplianceMapper.toAppliance(appliancesDto);
+    public ApplianceDto addAppliance(ApplianceInputDto applianceDto) {
+        ApplianceValidator.isApplianceValid(applianceDto);
+        Appliance appliance = ApplianceMapper.toAppliance(applianceDto);
         return ApplianceMapper.toDto(applianceRepository.save(appliance));
     }
 
-    public AppliancesDto updateAppliance(Long applianceId, AppliancesDto appliancesDto) {
+    public ApplianceDto updateAppliance(Long applianceId, ApplianceInputDto applianceInputDto) {
         Appliance updatedAppliance = applianceRepository.findById(applianceId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
-        updatedAppliance = applianceRepository.save(ApplianceMapper.updateAppliance(updatedAppliance, appliancesDto));
+        updatedAppliance = applianceRepository.save(ApplianceMapper.updateAppliance(updatedAppliance, applianceInputDto));
         return ApplianceMapper.toDto(updatedAppliance);
     }
 

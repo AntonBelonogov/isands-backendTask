@@ -1,6 +1,7 @@
 package ru.isands.BackendTask.service.computer;
 
 import ru.isands.BackendTask.dto.ComputerDto;
+import ru.isands.BackendTask.dto.inputDto.ComputerInputDto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -10,9 +11,9 @@ public interface ComputerService {
 
     ComputerDto getComputerById(Long computerId);
 
-    ComputerDto addComputer(Long applianceId, ComputerDto computerDto);
+    ComputerDto addComputer(Long applianceId, ComputerInputDto computerInputDto);
 
-    ComputerDto updateComputer(Long computerId, ComputerDto computerDto);
+    ComputerDto updateComputer(Long computerId, ComputerInputDto computerInputDto);
 
     Boolean deleteComputer(Long computerId);
 

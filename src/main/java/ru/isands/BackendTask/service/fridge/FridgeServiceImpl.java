@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.isands.BackendTask.dto.FridgeDto;
+import ru.isands.BackendTask.dto.inputDto.FridgeInputDto;
 import ru.isands.BackendTask.exception.ConflictException;
 import ru.isands.BackendTask.exception.NotFoundException;
 import ru.isands.BackendTask.mapper.FridgeMapper;
@@ -45,22 +46,22 @@ public class FridgeServiceImpl implements FridgeService {
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND)));
     }
 
-    public FridgeDto addFridge(Long applianceId, FridgeDto fridgeDto) {
+    public FridgeDto addFridge(Long applianceId, FridgeInputDto fridgeInputDto) {
         Appliance appliance = applianceRepository.findById(applianceId)
                 .orElseThrow(() -> new NotFoundException("Appliance not found."));
         if (!appliance.getName().equals(APPLIANCE_NAME)) {
             throw new ConflictException("Appliance is not for fridge.");
         }
-        FridgeValidator.isFridgeValid(fridgeDto);
-        Model model = FridgeMapper.toModel(fridgeDto);
+        FridgeValidator.isFridgeValid(fridgeInputDto);
+        Model model = FridgeMapper.toModel(fridgeInputDto);
         model.setAppliance(appliance);
         return FridgeMapper.toDto(model);
     }
 
-    public FridgeDto updateFridge(Long fridgeId, FridgeDto fridgeDto) {
+    public FridgeDto updateFridge(Long fridgeId, FridgeInputDto fridgeInputDto) {
         Model model = fridgeRepository.findByAppliance_NameAndId(APPLIANCE_NAME, fridgeId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
-        model = fridgeRepository.save(FridgeMapper.updateModel(model, fridgeDto));
+        model = fridgeRepository.save(FridgeMapper.updateModel(model, fridgeInputDto));
         return FridgeMapper.toDto(model);
     }
 

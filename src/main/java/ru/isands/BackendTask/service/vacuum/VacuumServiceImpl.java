@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.isands.BackendTask.dto.VacuumDto;
+import ru.isands.BackendTask.dto.inputDto.VacuumInputDto;
 import ru.isands.BackendTask.exception.ConflictException;
 import ru.isands.BackendTask.exception.NotFoundException;
 import ru.isands.BackendTask.mapper.VacuumMapper;
@@ -46,22 +47,22 @@ public class VacuumServiceImpl implements VacuumService {
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND)));
     }
 
-    public VacuumDto addVacuum(Long applianceId, VacuumDto vacuumDto) {
+    public VacuumDto addVacuum(Long applianceId, VacuumInputDto vacuumInputDto) {
         Appliance appliance = applianceRepository.findById(applianceId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
         if (!appliance.getName().equals(APPLIANCE_NAME)) {
             throw new ConflictException("Appliance is not for vacuum.");
         }
-        VacuumValidator.isTelevisionValid(vacuumDto);
-        Model model = VacuumMapper.toModel(vacuumDto);
+        VacuumValidator.isTelevisionValid(vacuumInputDto);
+        Model model = VacuumMapper.toModel(vacuumInputDto);
         model.setAppliance(appliance);
         return VacuumMapper.toDto(modelRepository.save(model));
     }
 
-    public VacuumDto updateVacuum(Long vacuumId, VacuumDto vacuumDto) {
+    public VacuumDto updateVacuum(Long vacuumId, VacuumInputDto vacuumInputDto) {
         Model model = modelRepository.findByAppliance_NameAndId(APPLIANCE_NAME, vacuumId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
-        model = modelRepository.save(VacuumMapper.updateModel(model, vacuumDto));
+        model = modelRepository.save(VacuumMapper.updateModel(model, vacuumInputDto));
         return VacuumMapper.toDto(model);
     }
 

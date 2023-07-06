@@ -1,20 +1,21 @@
 package ru.isands.BackendTask.service.appliance;
 
-import ru.isands.BackendTask.dto.AppliancesDto;
+import ru.isands.BackendTask.dto.ApplianceDto;
 import ru.isands.BackendTask.dto.ModelInfoDto;
+import ru.isands.BackendTask.dto.inputDto.ApplianceInputDto;
 import ru.isands.BackendTask.model.Model;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface ApplianceService {
-    List<AppliancesDto> getAppliances();
+    List<ApplianceDto> getAppliances();
 
-    AppliancesDto getApplianceById(Long applianceId);
+    ApplianceDto getApplianceById(Long applianceId);
 
-    AppliancesDto addAppliance(AppliancesDto appliancesDto);
+    ApplianceDto addAppliance(ApplianceInputDto applianceDto);
 
-    AppliancesDto updateAppliance(Long applianceId, AppliancesDto appliancesDto);
+    ApplianceDto updateAppliance(Long applianceId, ApplianceInputDto applianceInputDto);
 
     Boolean deleteAppliance(Long applianceId);
 

@@ -1,28 +1,29 @@
 package ru.isands.BackendTask.validator;
 
 import ru.isands.BackendTask.dto.ModelDto;
+import ru.isands.BackendTask.dto.inputDto.ModelInputDto;
 import ru.isands.BackendTask.exception.EntityNotValidException;
 
 import java.math.BigDecimal;
 
 public class ModelValidator {
-    public static void isModelValid(ModelDto modelDto) {
-        if (stringChecker(modelDto.getName())) {
+    public static void isModelValid(ModelInputDto modelInputDto) {
+        if (stringChecker(modelInputDto.getName())) {
             throw new EntityNotValidException("Model name isn't valid.");
         }
-        if (stringChecker(modelDto.getSerialNumber())) {
+        if (stringChecker(modelInputDto.getSerialNumber())) {
             throw new EntityNotValidException("Model serial number isn't valid.");
         }
-        if (stringChecker(modelDto.getColor())) {
+        if (stringChecker(modelInputDto.getColor())) {
             throw new EntityNotValidException("Model color isn't valid.");
         }
-        if (floatChecker(modelDto.getSize())) {
+        if (floatChecker(modelInputDto.getSize())) {
             throw new EntityNotValidException("Model color isn't valid.");
         }
-        if (bigDecimalChecker(modelDto.getPrice())) {
+        if (bigDecimalChecker(modelInputDto.getPrice())) {
             throw new EntityNotValidException("Model price isn't valid.");
         }
-        if (modelDto.getIsAvailable() == null) {
+        if (modelInputDto.getIsAvailable() == null) {
             throw new EntityNotValidException("Model is available isn't valid.");
         }
     }

@@ -1,6 +1,7 @@
 package ru.isands.BackendTask.service.fridge;
 
 import ru.isands.BackendTask.dto.FridgeDto;
+import ru.isands.BackendTask.dto.inputDto.FridgeInputDto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -10,9 +11,9 @@ public interface FridgeService {
 
     FridgeDto getFridge(Long fridgeId);
 
-    FridgeDto addFridge(Long applianceId, FridgeDto fridgeDto);
+    FridgeDto addFridge(Long applianceId, FridgeInputDto fridgeInputDto);
 
-    FridgeDto updateFridge(Long fridgeId, FridgeDto fridgeDto);
+    FridgeDto updateFridge(Long fridgeId, FridgeInputDto fridgeInputDto);
 
     Boolean deleteFridge(Long fridgeId);
 

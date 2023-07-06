@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.isands.BackendTask.dto.ComputerDto;
+import ru.isands.BackendTask.dto.inputDto.ComputerInputDto;
 import ru.isands.BackendTask.exception.ConflictException;
 import ru.isands.BackendTask.exception.NotFoundException;
 import ru.isands.BackendTask.mapper.ComputerMapper;
@@ -45,22 +46,22 @@ public class ComputerServiceImpl implements ComputerService {
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND)));
     }
 
-    public ComputerDto addComputer(Long applianceId, ComputerDto computerDto) {
+    public ComputerDto addComputer(Long applianceId, ComputerInputDto computerInputDto) {
         Appliance appliance = applianceRepository.findById(applianceId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
         if (!appliance.getName().equals(APPLIANCE_NAME)) {
             throw new ConflictException("Appliance is not for computer.");
         }
-        ComputerValidator.isComputerValid(computerDto);
-        Model model = ComputerMapper.toModel(computerDto);
+        ComputerValidator.isComputerValid(computerInputDto);
+        Model model = ComputerMapper.toModel(computerInputDto);
         model.setAppliance(appliance);
         return ComputerMapper.toDto(computerRepository.save(model));
     }
 
-    public ComputerDto updateComputer(Long computerId, ComputerDto computerDto) {
+    public ComputerDto updateComputer(Long computerId, ComputerInputDto computerInputDto) {
         Model model = computerRepository.findByAppliance_NameAndId(APPLIANCE_NAME, computerId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
-        model = computerRepository.save(ComputerMapper.updateModel(model, computerDto));
+        model = computerRepository.save(ComputerMapper.updateModel(model, computerInputDto));
         return ComputerMapper.toDto(model);
     }
 
