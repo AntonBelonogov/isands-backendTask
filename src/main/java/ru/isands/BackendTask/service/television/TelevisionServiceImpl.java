@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.isands.BackendTask.dto.TelevisionDto;
+import ru.isands.BackendTask.dto.inputDto.TelevisionInputDto;
 import ru.isands.BackendTask.exception.ConflictException;
 import ru.isands.BackendTask.exception.NotFoundException;
 import ru.isands.BackendTask.mapper.TelevisionMapper;
@@ -45,22 +46,22 @@ public class TelevisionServiceImpl implements TelevisionService {
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND)));
     }
 
-    public TelevisionDto addTelevision(Long applianceId, TelevisionDto televisionDto) {
+    public TelevisionDto addTelevision(Long applianceId, TelevisionInputDto televisionInputDto) {
         Appliance appliance = applianceRepository.findById(applianceId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
         if (!appliance.getName().equals(APPLIANCE_NAME)) {
             throw new ConflictException("Appliance is not for television.");
         }
-        TelevisionValidator.isTelevisionValid(televisionDto);
-        Model model = TelevisionMapper.toModel(televisionDto);
+        TelevisionValidator.isTelevisionValid(televisionInputDto);
+        Model model = TelevisionMapper.toModel(televisionInputDto);
         model.setAppliance(appliance);
         return TelevisionMapper.toDto(modelRepository.save(model));
     }
 
-    public TelevisionDto updateTelevision(Long televisionId, TelevisionDto televisionDto) {
+    public TelevisionDto updateTelevision(Long televisionId, TelevisionInputDto televisionInputDto) {
         Model model = modelRepository.findByAppliance_NameAndId(APPLIANCE_NAME, televisionId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
-        model = modelRepository.save(TelevisionMapper.updateModel(model, televisionDto));
+        model = modelRepository.save(TelevisionMapper.updateModel(model, televisionInputDto));
         return TelevisionMapper.toDto(model);
     }
 

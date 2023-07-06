@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.isands.BackendTask.dto.FridgeDto;
+import ru.isands.BackendTask.dto.inputDto.FridgeInputDto;
 import ru.isands.BackendTask.service.fridge.FridgeService;
 
 import javax.validation.Valid;
@@ -34,14 +35,14 @@ public class FridgeController {
 
     @Operation(summary = "Добавить в реестр по ID холодильник.")
     @PostMapping("/{applianceId}")
-    public FridgeDto addFridge(@PathVariable Long applianceId,@Valid @RequestBody FridgeDto fridgeDto) {
-        return fridgeService.addFridge(applianceId, fridgeDto);
+    public FridgeDto addFridge(@PathVariable Long applianceId, @RequestBody FridgeInputDto fridgeInputDto) {
+        return fridgeService.addFridge(applianceId, fridgeInputDto);
     }
 
     @Operation(summary = "Обновить холодильник по ID.")
     @PatchMapping("/{fridgeId}")
-    public FridgeDto updateFridge(@PathVariable Long fridgeId, @RequestBody FridgeDto fridgeDto) {
-        return fridgeService.updateFridge(fridgeId, fridgeDto);
+    public FridgeDto updateFridge(@PathVariable Long fridgeId, @RequestBody FridgeInputDto fridgeInputDto) {
+        return fridgeService.updateFridge(fridgeId, fridgeInputDto);
     }
 
     @Operation(summary = "Удалить холодильник по ID.")

@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.isands.BackendTask.dto.TelevisionDto;
+import ru.isands.BackendTask.dto.inputDto.TelevisionInputDto;
 import ru.isands.BackendTask.service.television.TelevisionService;
 
 import javax.validation.Valid;
@@ -35,14 +36,14 @@ public class TelevisionController {
 
     @Operation(summary = "Добавить модель телевизора по реестра ID.")
     @PostMapping("/{applianceId}")
-    public TelevisionDto addTelevision(@PathVariable Long applianceId, @Valid @RequestBody TelevisionDto televisionDto) {
-        return televisionService.addTelevision(applianceId, televisionDto);
+    public TelevisionDto addTelevision(@PathVariable Long applianceId, @RequestBody TelevisionInputDto televisionInputDto) {
+        return televisionService.addTelevision(applianceId, televisionInputDto);
     }
 
     @Operation(summary = "Обновить модель телевизора по ID.")
     @PatchMapping("/{televisionId}")
-    public TelevisionDto updatePhone(@PathVariable Long televisionId, @RequestBody TelevisionDto televisionDto) {
-        return televisionService.updateTelevision(televisionId, televisionDto);
+    public TelevisionDto updatePhone(@PathVariable Long televisionId, @RequestBody TelevisionInputDto televisionInputDto) {
+        return televisionService.updateTelevision(televisionId, televisionInputDto);
     }
 
     @Operation(summary = "Удалить модель телевизора по ID.")

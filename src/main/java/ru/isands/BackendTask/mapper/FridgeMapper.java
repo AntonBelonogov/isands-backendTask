@@ -2,12 +2,14 @@ package ru.isands.BackendTask.mapper;
 
 import ru.isands.BackendTask.dto.ComputerDto;
 import ru.isands.BackendTask.dto.FridgeDto;
+import ru.isands.BackendTask.dto.inputDto.FridgeInputDto;
 import ru.isands.BackendTask.model.Model;
 
 public class FridgeMapper {
 
     public static FridgeDto toDto(Model model) {
         return FridgeDto.builder()
+                .id(model.getId())
                 .name(model.getName())
                 .serialNumber(model.getSerialNumber())
                 .color(model.getColor())
@@ -20,19 +22,19 @@ public class FridgeMapper {
                 .build();
     }
 
-    public static Model toModel(FridgeDto fridgeDto) {
-        Model model = ModelMapper.toModel(fridgeDto);
-        model.setCompressorType(fridgeDto.getCompressorType());
-        model.setNumberOfDoors(fridgeDto.getNumberOfDoors());
+    public static Model toModel(FridgeInputDto fridgeInputDto) {
+        Model model = ModelMapper.toModel(fridgeInputDto);
+        model.setCompressorType(fridgeInputDto.getCompressorType());
+        model.setNumberOfDoors(fridgeInputDto.getNumberOfDoors());
         return model;
     }
 
-    public static Model updateModel(Model model, FridgeDto fridgeDto) {
-        Model updatedModel = ModelMapper.updateModel(model, fridgeDto);
+    public static Model updateModel(Model model, FridgeInputDto fridgeInputDto) {
+        Model updatedModel = ModelMapper.updateModel(model, fridgeInputDto);
         updatedModel.setCompressorType(model.getCompressorType() == null ?
-                model.getCompressorType() : fridgeDto.getCompressorType());
+                model.getCompressorType() : fridgeInputDto.getCompressorType());
         updatedModel.setNumberOfDoors(model.getNumberOfDoors() == null ?
-                model.getNumberOfDoors() : fridgeDto.getNumberOfDoors());
+                model.getNumberOfDoors() : fridgeInputDto.getNumberOfDoors());
         return updatedModel;
     }
 }

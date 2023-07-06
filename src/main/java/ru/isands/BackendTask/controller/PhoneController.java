@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.isands.BackendTask.dto.PhoneDto;
+import ru.isands.BackendTask.dto.inputDto.PhoneInputDto;
 import ru.isands.BackendTask.service.phone.PhoneService;
 
 import javax.validation.Valid;
@@ -35,14 +36,14 @@ public class PhoneController {
 
     @Operation(summary = "Добавить модель телефона по ID реестра.")
     @PostMapping("/{applianceId}")
-    public PhoneDto addPhone(@PathVariable Long applianceId, @Valid @RequestBody PhoneDto phoneDto) {
-        return phoneService.addPhone(applianceId, phoneDto);
+    public PhoneDto addPhone(@PathVariable Long applianceId, @RequestBody PhoneInputDto phoneInputDto) {
+        return phoneService.addPhone(applianceId, phoneInputDto);
     }
 
     @Operation(summary = "Обновить модель телефона по ID.")
     @PatchMapping("/{phoneId}")
-    public PhoneDto updatePhone(@PathVariable Long phoneId, @RequestBody PhoneDto phoneDto) {
-        return phoneService.updatePhone(phoneId, phoneDto);
+    public PhoneDto updatePhone(@PathVariable Long phoneId, @RequestBody PhoneInputDto phoneInputDto) {
+        return phoneService.updatePhone(phoneId, phoneInputDto);
     }
 
     @Operation(summary = "Удалить модель телефона по ID.")

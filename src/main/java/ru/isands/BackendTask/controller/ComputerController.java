@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.isands.BackendTask.dto.ComputerDto;
+import ru.isands.BackendTask.dto.inputDto.ComputerInputDto;
 import ru.isands.BackendTask.service.computer.ComputerService;
 
 import javax.validation.Valid;
@@ -35,13 +36,13 @@ public class ComputerController {
 
     @Operation(summary = "Добавить компьютер в Appliance.")
     @PostMapping("/{appliancesId}")
-    public ComputerDto addComputer(@PathVariable Long appliancesId, @Valid @RequestBody ComputerDto computerDto) {
-        return computerService.addComputer(appliancesId, computerDto);
+    public ComputerDto addComputer(@PathVariable Long appliancesId, @RequestBody ComputerInputDto computerInputDto) {
+        return computerService.addComputer(appliancesId, computerInputDto);
     }
 
     @Operation(summary = "Обновить модель компьютера по ID.")
     @PatchMapping("/{computerId}")
-    public ComputerDto updateComputer(@PathVariable Long computerId, @RequestBody ComputerDto computerDto) {
+    public ComputerDto updateComputer(@PathVariable Long computerId, @RequestBody ComputerInputDto computerDto) {
         return computerService.updateComputer(computerId, computerDto);
     }
 
