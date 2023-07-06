@@ -8,7 +8,6 @@ import ru.isands.BackendTask.dto.ModelInfoDto;
 import ru.isands.BackendTask.mapper.ModelMapper;
 import ru.isands.BackendTask.service.appliance.ApplianceService;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
