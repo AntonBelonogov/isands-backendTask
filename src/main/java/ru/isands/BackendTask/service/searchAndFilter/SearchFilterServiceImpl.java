@@ -1,5 +1,6 @@
 package ru.isands.BackendTask.service.searchAndFilter;
 
+import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import ru.isands.BackendTask.repository.ModelRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SearchFilterServiceImpl implements SearchFilterService {
@@ -22,10 +24,11 @@ public class SearchFilterServiceImpl implements SearchFilterService {
 
     public List<Model> getWithSearch(
             String name,
-            String applianceName,
             String color,
+            String applianceName,
             BigDecimal minPrice,
-            BigDecimal maxPrice
+            BigDecimal maxPrice,
+            Map<String, Object> attributeMap
     ) {
         List<Model> models;
 
@@ -48,6 +51,12 @@ public class SearchFilterServiceImpl implements SearchFilterService {
                 maxPrice = BigDecimal.valueOf(99999999);
             }
             models.retainAll(modelRepository.findAllByPriceBetween(minPrice, maxPrice));
+        }
+        if (attributeMap != null) {
+            for (String key :
+                    attributeMap.keySet()) {
+
+            }
         }
         return models;
     }

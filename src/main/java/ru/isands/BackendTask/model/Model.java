@@ -1,14 +1,19 @@
 package ru.isands.BackendTask.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.Hibernate;
+import ru.isands.BackendTask.converter.HashMapConverter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Objects;
 
 @Entity
-@Getter @Setter @ToString
+@Getter
+@Setter
 @RequiredArgsConstructor
 public class Model {
     @Id
@@ -33,44 +38,14 @@ public class Model {
     @Column(name = "is_available")
     private Boolean available;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @ToString.Exclude
+    @Convert(converter = HashMapConverter.class)
+    @Column(name =  "model_attributes")
+    private Map<String, Object> modelAttributes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "appliance_id")
     private Appliance appliance;
 
-    //Computer
-    @Column(name = "pc_category")
-    private String computerCategory;
-
-    @Column(name = "pc_processor_type")
-    private String processorType;
-
-    //Fridge
-    @Column(name = "f_doors_number")
-    private Integer numberOfDoors;
-
-    @Column(name = "f_compressor_type")
-    private String compressorType;
-
-    //Phone
-    @Column(name = "p_memory")
-    private Integer memory;
-
-    @Column(name = "p_cameras_number")
-    private Integer numberOfCameras;
-
-    //television
-    @Column(name = "tv_category")
-    private String televisionCategory;
-
-    @Column(name = "tv_technology")
-    private String televisionTechnology;
-
-    //VacuumCleaner
-    @Column(name = "vc_dust_bag_volume")
-    private Float dustBagVolume;
-
-    @Column(name = "vc_modes_number")
-    private Integer numberOfModes;
 
     @Override
     public boolean equals(Object o) {

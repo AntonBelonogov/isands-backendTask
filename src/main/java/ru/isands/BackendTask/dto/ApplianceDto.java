@@ -5,8 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.isands.BackendTask.converter.HashMapConverter;
 
+import javax.persistence.Convert;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -30,6 +33,10 @@ public class ApplianceDto {
 
     @Schema(description = "Возможность оформления рассрочки.")
     private Boolean installment;
+
+    @Schema(description = "Атрибуты вида техники.")
+    @Convert(converter = HashMapConverter.class)
+    private Map<String, Object> applianceAttributes;
 
     @Schema(description = "Модели в наличии.")
     private List<ModelInfoDto> models;

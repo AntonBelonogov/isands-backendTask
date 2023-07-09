@@ -10,12 +10,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
-public abstract class ModelDto {
+public class ModelDto {
 
     private Long id;
 
@@ -36,4 +37,10 @@ public abstract class ModelDto {
 
     @Schema(description = "Наличие модели.")
     private Boolean isAvailable;
+
+    @Schema(description = "Атрибуты модели.")
+    Map<String, Object> attributes;
+
+    @Schema(description = "Вид техники к которой он относиться.")
+    private ApplianceModelDto appliance;
 }

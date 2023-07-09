@@ -53,27 +53,4 @@ public class ApplianceController {
     public Boolean deleteAppliance(@PathVariable Long applianceId) {
         return applianceService.deleteAppliance(applianceId);
     }
-
-    @Operation(summary = "Поиск по моделям с использованием фильтов.")
-    @GetMapping("/search")
-    public List<ModelInfoDto> getWithSearch(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String applianceName,
-            @RequestParam(required = false) String color,
-            @RequestParam(required = false) BigDecimal minPrice,
-            @RequestParam(required = false) BigDecimal maxPrice
-    ) {
-        return applianceService.getWithSearch(name, applianceName, color, minPrice, maxPrice).stream()
-                .map(ModelMapper::toInfoDto)
-                .collect(Collectors.toList());
-    }
-
-    @Operation(summary = "Сортировка моделей техники по алфавиту и по стоимости.")
-    @GetMapping("/filter")
-    public List<ModelInfoDto> getWithFilter(
-            @RequestParam(required = false, defaultValue = "asc") String alphabet,
-            @RequestParam(required = false) String price
-    ) {
-        return applianceService.getWithFilter(alphabet, price);
-    }
 }

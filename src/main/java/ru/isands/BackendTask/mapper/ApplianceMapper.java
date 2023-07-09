@@ -1,6 +1,7 @@
 package ru.isands.BackendTask.mapper;
 
 import ru.isands.BackendTask.dto.ApplianceDto;
+import ru.isands.BackendTask.dto.ApplianceModelDto;
 import ru.isands.BackendTask.dto.inputDto.ApplianceInputDto;
 import ru.isands.BackendTask.model.Appliance;
 
@@ -17,6 +18,7 @@ public class ApplianceMapper {
                 .manufacturer(appliance.getManufacturer())
                 .onlineOrder(appliance.getOnlineOrder())
                 .installment(appliance.getInstallment())
+                .applianceAttributes(appliance.getApplianceAttributes())
                 .models(appliance.getModels() != null ? appliance.getModels()
                         .stream()
                         .map(ModelMapper::toInfoDto)
@@ -24,13 +26,25 @@ public class ApplianceMapper {
                 .build();
     }
 
-    public static Appliance toAppliance(ApplianceInputDto applianceDto) {
+    public static ApplianceModelDto toModelDto(Appliance appliance) {
+        return ApplianceModelDto.builder()
+                .id(appliance.getId())
+                .name(appliance.getName())
+                .country(appliance.getCountry())
+                .manufacturer(appliance.getManufacturer())
+                .onlineOrder(appliance.getOnlineOrder())
+                .installment(appliance.getInstallment())
+                .build();
+    }
+
+    public static Appliance toAppliance(ApplianceInputDto applianceInputDto) {
         Appliance appliance = new Appliance();
-        appliance.setName(applianceDto.getName());
-        appliance.setCountry(applianceDto.getCountry());
-        appliance.setManufacturer(applianceDto.getManufacturer());
-        appliance.setOnlineOrder(applianceDto.getOnlineOrder());
-        appliance.setInstallment(applianceDto.getInstallment());
+        appliance.setName(applianceInputDto.getName());
+        appliance.setCountry(applianceInputDto.getCountry());
+        appliance.setManufacturer(applianceInputDto.getManufacturer());
+        appliance.setOnlineOrder(applianceInputDto.getOnlineOrder());
+        appliance.setInstallment(applianceInputDto.getInstallment());
+        appliance.setApplianceAttributes(applianceInputDto.getApplianceAttributes());
         return appliance;
     }
 
@@ -45,6 +59,8 @@ public class ApplianceMapper {
                 appliance.getOnlineOrder() : applianceInputDto.getOnlineOrder());
         appliance.setInstallment(applianceInputDto.getInstallment() == null ?
                 appliance.getInstallment() : applianceInputDto.getInstallment());
+        appliance.setApplianceAttributes(applianceInputDto.getApplianceAttributes() == null ?
+                appliance.getApplianceAttributes() : applianceInputDto.getApplianceAttributes());
         return appliance;
     }
 }

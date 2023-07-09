@@ -2,10 +2,11 @@ package ru.isands.BackendTask.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-
+import ru.isands.BackendTask.converter.HashMapConverter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Entity
@@ -33,6 +34,10 @@ public class Appliance {
 
     @Column(name = "installment")
     private Boolean installment;
+
+    @Convert(converter = HashMapConverter.class)
+    @Column(name = "appliance_attributes")
+    private Map<String, Object> applianceAttributes;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "appliance_id")

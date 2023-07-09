@@ -18,6 +18,7 @@ import ru.isands.BackendTask.validator.ApplianceValidator;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,9 +74,10 @@ public class ApplianceServiceImpl implements ApplianceService {
             String applianceName,
             String color,
             BigDecimal minPrice,
-            BigDecimal maxPrice
+            BigDecimal maxPrice,
+            Map<String, Object> attributeMap
     ) {
-        return searchFilterService.getWithSearch(name, applianceName, color, minPrice, maxPrice);
+        return searchFilterService.getWithSearch(name, applianceName, color, minPrice, maxPrice, attributeMap);
     }
 
     public List<ModelInfoDto> getWithFilter(String alphabet, String price) {

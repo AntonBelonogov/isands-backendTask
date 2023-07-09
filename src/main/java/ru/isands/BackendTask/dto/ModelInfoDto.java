@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -31,5 +32,8 @@ public class ModelInfoDto {
 
     @Schema(description = "Наличие модели.")
     private Boolean isAvailable;
+
+    @Schema(description = "Атрибуты модели.")
+    Map<String, Object> attributes;
 
 }

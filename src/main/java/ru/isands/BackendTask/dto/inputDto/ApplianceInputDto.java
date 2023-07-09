@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +27,6 @@ public class ApplianceInputDto {
 
     @Schema(description = "Возможность оформления рассрочки.")
     private Boolean installment;
+
+    private Map<String, Object> applianceAttributes;
 }

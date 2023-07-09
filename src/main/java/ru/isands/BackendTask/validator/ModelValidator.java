@@ -1,6 +1,5 @@
 package ru.isands.BackendTask.validator;
 
-import ru.isands.BackendTask.dto.ModelDto;
 import ru.isands.BackendTask.dto.inputDto.ModelInputDto;
 import ru.isands.BackendTask.exception.EntityNotValidException;
 
@@ -39,6 +38,7 @@ public class ModelValidator {
     public static boolean bigDecimalChecker(BigDecimal number) {
         return number == null || number.floatValue() < BigDecimal.ZERO.floatValue();
     }
+
     public static boolean intChecker(Integer number) {
         return number == null || number < 0;
     }

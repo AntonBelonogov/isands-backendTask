@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@SuperBuilder(toBuilder = true)
-public abstract class ModelInputDto {
+public class ModelInputDto {
 
     @Schema(description = "Наиминование модели.")
     private String name;
@@ -31,4 +31,7 @@ public abstract class ModelInputDto {
 
     @Schema(description = "Наличие модели.")
     private Boolean isAvailable;
+
+    @Schema(description = "Атрибуты модели.")
+    Map<String, Object> attributes;
 }
