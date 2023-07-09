@@ -36,7 +36,7 @@ public class ApplianceDto {
 
     @Schema(description = "Атрибуты вида техники.")
     @Convert(converter = HashMapConverter.class)
-    private Map<String, Object> applianceAttributes;
+    private Map<String, String> applianceAttributes;
 
     @Schema(description = "Модели в наличии.")
     private List<ModelInfoDto> models;

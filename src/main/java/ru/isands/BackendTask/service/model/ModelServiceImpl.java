@@ -69,10 +69,8 @@ public class ModelServiceImpl implements ModelService {
     public ModelDto updateModel(Long modelId, ModelInputDto modelInputDto) {
         Model model = modelRepository.findById(modelId)
                 .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
-        Appliance appliance = applianceRepository.findById(model.getAppliance().getId())
-                .orElseThrow(() -> new NotFoundException(ENTITY_NOT_FOUND));
         ModelMapper.updateModel(model, modelInputDto);
-        AttributeValidator.compareModel(appliance, model);
+        AttributeValidator.compareModel(model.getAppliance(), model);
         return ModelMapper.toDto(modelRepository.save(model));
     }
 

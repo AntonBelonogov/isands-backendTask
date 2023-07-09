@@ -28,7 +28,9 @@ public class ApplianceServiceImpl implements ApplianceService {
     }
 
     public List<ApplianceDto> getAppliances() {
-        return applianceRepository.findAll()
+        List<Appliance> a = applianceRepository.findAll();
+
+        return a
                 .stream()
                 .map(ApplianceMapper::toDto)
                 .collect(Collectors.toList());

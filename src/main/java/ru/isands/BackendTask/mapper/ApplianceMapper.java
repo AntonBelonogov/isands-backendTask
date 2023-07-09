@@ -6,6 +6,8 @@ import ru.isands.BackendTask.dto.inputDto.ApplianceInputDto;
 import ru.isands.BackendTask.model.Appliance;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ApplianceMapper {
@@ -18,7 +20,7 @@ public class ApplianceMapper {
                 .manufacturer(appliance.getManufacturer())
                 .onlineOrder(appliance.getOnlineOrder())
                 .installment(appliance.getInstallment())
-                .applianceAttributes(appliance.getApplianceAttributes())
+                .applianceAttributes(toDtoAttribute(appliance.getApplianceAttributes()))
                 .models(appliance.getModels() != null ? appliance.getModels()
                         .stream()
                         .map(ModelMapper::toInfoDto)
@@ -44,7 +46,8 @@ public class ApplianceMapper {
         appliance.setManufacturer(applianceInputDto.getManufacturer());
         appliance.setOnlineOrder(applianceInputDto.getOnlineOrder());
         appliance.setInstallment(applianceInputDto.getInstallment());
-        appliance.setApplianceAttributes(applianceInputDto.getApplianceAttributes());
+        appliance.setApplianceAttributes(applianceInputDto.getApplianceAttributes() != null ?
+                applianceInputDto.getApplianceAttributes() : Collections.emptyMap());
         return appliance;
     }
 
@@ -62,5 +65,30 @@ public class ApplianceMapper {
         appliance.setApplianceAttributes(applianceInputDto.getApplianceAttributes() == null ?
                 appliance.getApplianceAttributes() : applianceInputDto.getApplianceAttributes());
         return appliance;
+    }
+
+    private static Map<String, String> toDtoAttribute(Map<String,Object> stringObjectMap) {
+        Map<String, String> stringStringMap = new HashMap<>();
+        for (Map.Entry<String, Object> entry : stringObjectMap.entrySet()) {
+            if (entry.getValue() instanceof Integer) {
+                stringStringMap.put(entry.getKey(), "Integer");
+            }
+            if (entry.getValue() instanceof Float) {
+                stringStringMap.put(entry.getKey(), "Float");
+            }
+            if (entry.getValue() instanceof String) {
+                stringStringMap.put(entry.getKey(), "String");
+            }
+            if (entry.getValue() instanceof Boolean) {
+                stringStringMap.put(entry.getKey(), "Boolean");
+            }
+            if (entry.getValue() instanceof Long) {
+                stringStringMap.put(entry.getKey(), "Long");
+            }
+            if (entry.getValue() instanceof Double) {
+                stringStringMap.put(entry.getKey(), "Double");
+            }
+        }
+        return stringStringMap;
     }
 }

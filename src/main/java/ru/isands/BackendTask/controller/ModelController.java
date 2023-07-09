@@ -42,19 +42,19 @@ public class ModelController {
 
     @Operation(summary = "Добавить модель в Appliance.")
     @PostMapping("/{appliancesId}")
-    public ModelDto addComputer(@PathVariable Long appliancesId, @RequestBody ModelInputDto modelInputDto) {
+    public ModelDto addModel(@PathVariable Long appliancesId, @RequestBody ModelInputDto modelInputDto) {
         return modelService.addModel(appliancesId, modelInputDto);
     }
 
     @Operation(summary = "Обновить модель по ID.")
     @PatchMapping("/{modelId}")
-    public ModelDto updateComputer(@PathVariable Long modelId, @RequestBody ModelInputDto computerDto) {
-        return modelService.updateModel(modelId, computerDto);
+    public ModelDto updateModel(@PathVariable Long modelId, @RequestBody ModelInputDto modelInputDto) {
+        return modelService.updateModel(modelId, modelInputDto);
     }
 
     @Operation(summary = "Удалить модель по ID.")
     @DeleteMapping("/{modelId}")
-    public Boolean deleteComputer(@PathVariable Long modelId) {
+    public Boolean deleteModel(@PathVariable Long modelId) {
         return modelService.deleteModel(modelId);
     }
 

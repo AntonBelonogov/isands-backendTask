@@ -5,6 +5,8 @@ import ru.isands.BackendTask.dto.ModelInfoDto;
 import ru.isands.BackendTask.dto.inputDto.ModelInputDto;
 import ru.isands.BackendTask.model.Model;
 
+import java.util.Collections;
+
 public class ModelMapper {
 
     public static ModelInfoDto toInfoDto(Model model) {
@@ -41,7 +43,8 @@ public class ModelMapper {
         model.setSize(modelInputDto.getSize());
         model.setPrice(modelInputDto.getPrice());
         model.setAvailable(modelInputDto.getIsAvailable());
-        model.setModelAttributes(modelInputDto.getAttributes());
+        model.setModelAttributes(modelInputDto.getAttributes() != null ?
+                modelInputDto.getAttributes() : Collections.emptyMap());
         return model;
     }
 
