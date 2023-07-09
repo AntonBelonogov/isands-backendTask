@@ -18,7 +18,7 @@ public class ApplianceValidator {
             throw new EntityNotValidException("Appliance online order can't be null.");
         }
         if (applianceDto.getInstallment() == null) {
-            throw new EntityNotValidException("Appliance online order can't be null.");
+            throw new EntityNotValidException("Appliance installment order can't be null.");
         }
     }
 

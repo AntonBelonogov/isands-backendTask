@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS appliance_models CASCADE;
 DROP TABLE IF EXISTS appliance CASCADE;
 DROP TABLE IF EXISTS model CASCADE;
 
@@ -9,7 +10,7 @@ CREATE TABLE IF NOT EXISTS appliance
     manufacturer         VARCHAR(255) NOT NULL,
     is_online_order      BOOLEAN      NOT NULL,
     installment          BOOLEAN      NOT NULL,
-    appliance_attributes text
+    appliance_attributes text         NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS model
@@ -22,6 +23,6 @@ CREATE TABLE IF NOT EXISTS model
     size             NUMERIC(10, 2)                NOT NULL,
     is_available     BOOLEAN                       NOT NULL,
     appliance_id     INT REFERENCES appliance (id) NOT NULL,
-    model_attributes text
+    model_attributes text                          NOT NULL
 );
 

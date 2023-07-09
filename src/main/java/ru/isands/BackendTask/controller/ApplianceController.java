@@ -4,14 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.isands.BackendTask.dto.ApplianceDto;
-import ru.isands.BackendTask.dto.ModelInfoDto;
 import ru.isands.BackendTask.dto.inputDto.ApplianceInputDto;
-import ru.isands.BackendTask.mapper.ModelMapper;
 import ru.isands.BackendTask.service.appliance.ApplianceService;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")

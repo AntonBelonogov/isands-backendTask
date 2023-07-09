@@ -1,9 +1,12 @@
 package ru.isands.BackendTask.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Type;
 import ru.isands.BackendTask.converter.HashMapConverter;
 
 import javax.persistence.*;
@@ -14,6 +17,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@ToString
 @RequiredArgsConstructor
 public class Model {
     @Id
@@ -39,9 +43,10 @@ public class Model {
     private Boolean available;
 
     @Convert(converter = HashMapConverter.class)
-    @Column(name =  "model_attributes")
+    @Column(name =  "model_attributes", columnDefinition = "json")
     private Map<String, Object> modelAttributes;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "appliance_id")
     private Appliance appliance;

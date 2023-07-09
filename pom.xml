@@ -51,15 +51,6 @@
 			<artifactId>springdoc-openapi-data-rest</artifactId>
 			<version>1.5.12</version>
 		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.module</groupId>
-			<artifactId>jackson-module-jaxb-annotations</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.vladmihalcea</groupId>
-			<artifactId>hibernate-types-52</artifactId>
-			<version>2.9.11</version>
-		</dependency>
 	</dependencies>
 
 	<build>

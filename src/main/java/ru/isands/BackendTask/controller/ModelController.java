@@ -75,8 +75,9 @@ public class ModelController {
     @GetMapping("/filter")
     public List<ModelDto> getWithFilter(
             @RequestParam(required = false, defaultValue = "asc") String alphabet,
-            @RequestParam(required = false) String price
+            @RequestParam(required = false) String price,
+            @RequestParam(required = false) String applianceName
     ) {
-        return modelService.getWithFilter(alphabet, price);
+        return modelService.getWithFilter(alphabet, price, applianceName);
     }
 }

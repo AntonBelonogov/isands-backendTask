@@ -29,5 +29,5 @@ public interface ModelService {
             Map<String, Object> attributeMap
     );
 
-    List<ModelDto> getWithFilter(String alphabet, String price);
+    List<ModelDto> getWithFilter(String alphabet, String price, String applianceName);
 }
